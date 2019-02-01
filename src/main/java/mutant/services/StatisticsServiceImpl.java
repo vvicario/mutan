@@ -19,6 +19,9 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private SequenceRepository sequenceRepository;
 
+    public StatisticsServiceImpl(SequenceRepository sequenceRepository) {
+        this.sequenceRepository = sequenceRepository;
+    }
     @Async
     @Override
     public CompletableFuture<Statistic> getStatistics() {
@@ -29,6 +32,6 @@ public class StatisticsServiceImpl implements StatisticsService {
             ratio = mutantTotal.size() / totalSeq;
         }
         DecimalFormat df = new DecimalFormat("#.#");
-        return CompletableFuture.completedFuture(new Statistic(BigDecimal.valueOf(mutantTotal.size()), BigDecimal.valueOf(totalSeq), Double.valueOf(df.format(ratio))));
+        return CompletableFuture.completedFuture(new Statistic(BigDecimal.valueOf(CollectionUtils.isEmpty(mutantTotal) ? 0 : mutantTotal.size()), BigDecimal.valueOf(totalSeq), Double.valueOf(df.format(ratio))));
     }
 }

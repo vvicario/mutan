@@ -34,6 +34,12 @@ public class MutantResource {
     @Autowired
     private SequenceValidator validator;
 
+    public MutantResource(SequenceValidator validator, StatisticsService statisticsService, MutantService mutantService) {
+      this.validator = validator;
+      this.statisticsService = statisticsService;
+      this.mutantService = mutantService;
+    }
+
     @PostMapping(path = "/mutant")
     public ResponseEntity create(@RequestBody @Valid Sequence sequence) throws Exception {
         validator.validate(sequence);

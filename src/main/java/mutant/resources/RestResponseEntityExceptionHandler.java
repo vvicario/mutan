@@ -29,30 +29,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     private static final Logger log = LoggerFactory.getLogger(RestResponseEntityExceptionHandler.class);
 
-    @ExceptionHandler({CompletionException.class, ConcurrentModificationException.class})
-    public ResponseEntity<Object> handleConflict(Exception ex, WebRequest request) {
-        log.error("There was an error. ", ex.getMessage());
-        ApiError apiError = new ApiError(
-                HttpStatus.CONFLICT, ex.getLocalizedMessage());
-        return new ResponseEntity<>(
-                apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Object> handleIllegalArguments(Exception ex, WebRequest request) {
         log.error("There was an error.", ex.getMessage());
         ApiError apiError = new ApiError(
                 HttpStatus.BAD_REQUEST, ex.getLocalizedMessage());
-        return new ResponseEntity<>(
-                apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
-
-    @ExceptionHandler({NotFoundException.class})
-    public ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
-        log.warn("Not found.", ex.getMessage());
-        ApiError apiError = new ApiError(
-                HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
@@ -71,22 +52,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-
         ApiError apiError =
                 new ApiError(HttpStatus.BAD_REQUEST, String.join(",", errors));
         return handleExceptionInternal(
                 ex, apiError, headers, apiError.getStatus(), request);
     }
 
-
-    public ResponseEntity<Object> handleUncaughtException(
-            Throwable throwable, Method method, Object... obj) {
-
-        log.error("Uncaught error - ", throwable);
-        ApiError apiError =
-                new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, throwable.getMessage());
-        return new ResponseEntity<>(
-                apiError, new HttpHeaders(), apiError.getStatus());
-
-    }
 }
