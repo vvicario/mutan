@@ -29,9 +29,6 @@ public class MutantServiceImpl implements MutantService {
     private static final Integer MIN_TOTAL_SEQUENCE = 2;
     private static final Integer TOTAL_SIZE_SEQUENCE = 4;
 
-    private static final Logger log = LoggerFactory.getLogger(MutantServiceImpl.class);
-
-
     @Transactional
     @Override
     public Sequence update(Sequence sequence) {

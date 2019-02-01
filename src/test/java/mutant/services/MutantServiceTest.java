@@ -1,6 +1,7 @@
 package mutant.services;
 
 import mutant.domain.Sequence;
+import mutant.repository.SequenceRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import mutant.MutantApplication;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -29,9 +31,24 @@ public class MutantServiceTest {
     private static final String[] DNA_7 = {"GTCAGA", "CGTGAC", "ATGACG", "TGACTC", "GACGGT", "AGTACC"};
     private static final String[] DNA_8 = {"GTGATA", "CGATAC", "ATGACG", "TGACTC", "CACGGT", "AGTACC"};
     private static final String[] DNA_9 = {"TCCAGG", "CTCAGG", "CGTCGA", "ACGTCG", "ATCGTC", "TCACGA"};
-    private static final String[] DNA_10 = {"TCCAGG","CTCAGG","CGACGT","ACGTCG","ATCGTC","TCACGA"};
+    private static final String[] DNA_10 = {"ACTG","ACGT","CGAT","GTAC"};
+
     @Autowired
     private MutantService service;
+
+    @Autowired
+    SequenceRepository sequenceRepository;
+
+    @Test
+    public void testSave() throws Exception {
+        Sequence sequence = new Sequence();
+        sequence.setDna(DNA_1);
+        sequence = service.save(sequence);
+        Assert.assertTrue(Arrays.equals(sequence.getDna(), DNA_1));
+        sequence.setMutant(true);
+        sequence = service.update(sequence);
+        Assert.assertTrue(sequence.getMutant());
+    }
 
     @Test
     public void testIsMutantDiagonalAndHorizontalAndVertical() throws ExecutionException, InterruptedException {
@@ -104,6 +121,7 @@ public class MutantServiceTest {
         CompletableFuture<Boolean> isMutant = service.isMutant(sequence);
         Assert.assertTrue(isMutant.get());
     }
+
 
 
 }
