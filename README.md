@@ -14,6 +14,3 @@ Un humano es mutante, si se encuentra ​ más de una secuencia de cuatro letras
 
 ### Development
 Ver [Dev Notes](docs/DEVNOTES.md)
-
-### Reservation API
-Ver [Mutant API Notes](docs/APINOTES.md)

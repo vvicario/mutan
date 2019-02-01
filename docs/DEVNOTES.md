@@ -20,10 +20,10 @@ Run `MutantApplication` from your favorite IDE. Alternatively, run `mvn clean pa
 then look in your target directory and run `java -jar campsite-1.jar`. To verify your deployment,
 issue a GET to localhost:8080/stats This find out statistics.
 
-## Deployed Verion
+## Deployed Version
 
 URL: https://mutant-230214.appspot.com
-## ENDPOINTS:
+## Endpoints:
 
 - GET: https://mutant-230214.appspot.com/stats
 
