@@ -8,4 +8,3 @@ script:
   - mvn clean verify -P all-tests
 after_success:
   -  mvn clean -DTRAVIS_JOB_ID=$TRAVIS_JOB_ID cobertura:cobertura coveralls:report
-
