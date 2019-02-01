@@ -126,7 +126,7 @@
                 <version>4.3.0</version>
                 <configuration>
                     <serviceName>travis-ci</serviceName>
-                    <serviceJobId>myza3nci1qUebnmORGPWznKjdIhrIlPS1</serviceJobId>
+                    <serviceJobId>${env.TRAVIS_JOB_ID} </serviceJobId>
                 </configuration>
             </plugin>
         </plugins>
