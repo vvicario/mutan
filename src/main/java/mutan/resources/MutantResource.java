@@ -1,6 +1,7 @@
 package mutan.resources;
 
 import mutan.domain.Sequence;
+import mutan.dto.Statistic;
 import mutan.services.StatisticsService;
 import org.apache.catalina.connector.Response;
 import mutan.services.MutantService;
@@ -15,12 +16,13 @@ import mutan.validators.SequenceValidator;
 
 import javax.validation.Valid;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author vvicario
  */
 @RestController
-@RequestMapping("/mutant")
+@RequestMapping
 public class MutantResource {
 
     @Autowired
@@ -32,7 +34,7 @@ public class MutantResource {
     @Autowired
     private SequenceValidator validator;
 
-    @PostMapping
+    @PostMapping(path = "/mutant")
     public ResponseEntity create(@RequestBody @Valid Sequence sequence) throws Exception {
         validator.validate(sequence);
         sequence = mutantService.save(sequence);
@@ -50,8 +52,8 @@ public class MutantResource {
     }
 
     @GetMapping(path = "/stats")
-    public ResponseEntity findStatistics() {
-       return ResponseEntity.ok().body(statisticsService.getStatistics());
+    public ResponseEntity<Statistic> findStatistics() throws ExecutionException, InterruptedException {
+       return ResponseEntity.ok().body(statisticsService.getStatistics().get());
     }
 
 }

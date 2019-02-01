@@ -1,6 +1,6 @@
 package mutan.services;
 
-import mutan.domain.Sequence;
+import mutan.dto.Statistic;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -8,6 +8,6 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public interface StatisticsService {
 
-    CompletableFuture<Sequence> getStatistics();
+    CompletableFuture<Statistic> getStatistics();
 
 }

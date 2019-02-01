@@ -1,8 +1,9 @@
 package mutan.services;
 
 import mutan.domain.Sequence;
-import mutan.dto.StatsDTO;
+import mutan.dto.Statistic;
 import mutan.repository.SequenceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -15,11 +16,12 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
+    @Autowired
     private SequenceRepository sequenceRepository;
 
     @Async
     @Override
-    public CompletableFuture<Sequence> getStatistics() {
+    public CompletableFuture<Statistic> getStatistics() {
         List<Sequence> mutantTotal = sequenceRepository.findByMutantTrue();
         Long totalSeq = sequenceRepository.count();
         long ratio = 0;
@@ -27,7 +29,6 @@ public class StatisticsServiceImpl implements StatisticsService {
             ratio = mutantTotal.size() / totalSeq;
         }
         DecimalFormat df = new DecimalFormat("#.#");
-        new StatsDTO(BigDecimal.valueOf(mutantTotal.size()), BigDecimal.valueOf(totalSeq), Double.valueOf(df.format(ratio)));
-        return null;
+        return CompletableFuture.completedFuture(new Statistic(BigDecimal.valueOf(mutantTotal.size()), BigDecimal.valueOf(totalSeq), Double.valueOf(df.format(ratio))));
     }
 }
