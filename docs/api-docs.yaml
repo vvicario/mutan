@@ -1,0 +1,73 @@
+swagger: "2.0"
+info:
+  description: "Magneto quiere reclutar la mayor cantidad de mutantes para poder luchar contra los X-Mens. Se necesita detectar si un humano es mutante basándose en su secuencia de ADN."
+  version: "1.0.0"
+  title: "Mutante API"
+host: "mutant-230214.appspot.com"
+basePath: "/"
+tags:
+- name: "sequence"
+  description: "Secuencia a evaluar"
+schemes:
+- "https"
+- "http"
+paths:
+  /mutant:
+    post:
+      tags:
+      - "sequence"
+      summary: "Validar secuencia"
+      operationId: "postSecuence"
+      description: "Se detecta si un humano es mutante enviando la secuencia de ADN mediante un HTTP POST. Se guarda el registro si no existe."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "dna"
+        description: "Secuencia a evaluar"
+        required: true
+        schema:
+          $ref: '#/definitions/dna'
+      responses:
+        400:
+          description: "Invalid input"
+        200:
+          description: La secuencia es mutante
+        403:
+          description: La secuencia no es mutante
+  /stats:
+    get:
+      summary: "Devuelve un Json con las estadísticas de las verificaciones de ADN"
+      description: ""
+      operationId: "getEstadisticas"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+      parameters:
+      - in: "body"
+        name: "statistics"
+        schema:
+          $ref: '#/definitions/statistics'
+definitions:
+  dna:
+    type: "object"
+    required:
+    - "dna"
+    properties:
+      dna:
+        type: "array"
+        items:
+          type: "string"
+  statistics:
+    type: "object"
+    properties:
+      count_mutant_dna:
+        type: "number"
+      count_human_dna:
+        type: "number"
+      ratio:
+        type: "number"

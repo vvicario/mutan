@@ -1,10 +1,10 @@
-package mutan.resources;
+package mutant.resources;
 
-import mutan.domain.Sequence;
-import mutan.dto.Statistic;
-import mutan.services.StatisticsService;
+import mutant.domain.Sequence;
+import mutant.dto.Statistic;
+import mutant.services.StatisticsService;
 import org.apache.catalina.connector.Response;
-import mutan.services.MutantService;
+import mutant.services.MutantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import mutan.validators.SequenceValidator;
+import mutant.validators.SequenceValidator;
 
 import javax.validation.Valid;
 import java.util.concurrent.CompletableFuture;

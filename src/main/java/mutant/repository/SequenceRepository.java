@@ -1,6 +1,6 @@
-package mutan.repository;
+package mutant.repository;
 
-import mutan.domain.Sequence;
+import mutant.domain.Sequence;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

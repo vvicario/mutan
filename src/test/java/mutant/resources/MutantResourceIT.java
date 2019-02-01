@@ -1,6 +1,6 @@
-package mutan.resources;
+package mutant.resources;
 
-import mutan.domain.Sequence;
+import mutant.domain.Sequence;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import mutan.MutanApplication;
+import mutant.MutantApplication;
 
 import java.time.LocalDate;
 
@@ -21,7 +21,7 @@ import java.time.LocalDate;
  * @author vvicario
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MutanApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = MutantApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MutantResourceIT {
 
 

@@ -1,6 +1,6 @@
-package mutan.services;
+package mutant.services;
 
-import mutan.domain.Sequence;
+import mutant.domain.Sequence;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Component;
 

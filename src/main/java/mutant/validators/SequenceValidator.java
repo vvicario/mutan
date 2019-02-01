@@ -1,6 +1,6 @@
-package mutan.validators;
+package mutant.validators;
 
-import mutan.domain.Sequence;
+import mutant.domain.Sequence;
 import org.springframework.stereotype.Component;
 
 

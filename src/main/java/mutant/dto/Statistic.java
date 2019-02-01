@@ -1,4 +1,4 @@
-package mutan.dto;
+package mutant.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

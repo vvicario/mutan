@@ -1,6 +1,6 @@
-package mutan.services;
+package mutant.services;
 
-import mutan.dto.Statistic;
+import mutant.dto.Statistic;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;

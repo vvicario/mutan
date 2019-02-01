@@ -1,8 +1,8 @@
-package mutan.services;
+package mutant.services;
 
-import mutan.domain.Sequence;
-import mutan.dto.Statistic;
-import mutan.repository.SequenceRepository;
+import mutant.domain.Sequence;
+import mutant.dto.Statistic;
+import mutant.repository.SequenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
