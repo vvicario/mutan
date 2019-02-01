@@ -1,6 +1,6 @@
-package mutan.validators;
+package mutant.validators;
 
-import mutan.domain.Sequence;
+import mutant.domain.Sequence;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

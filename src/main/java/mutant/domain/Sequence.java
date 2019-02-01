@@ -1,4 +1,4 @@
-package mutan.domain;
+package mutant.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -1,4 +1,4 @@
-package mutan.dto;
+package mutant.dto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

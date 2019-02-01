@@ -1,10 +1,10 @@
-package mutan.dto;
+package mutant.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
-public class StatsDTO {
+public class Statistic {
 
     @JsonProperty("count_mutant_dna")
     BigDecimal countMutantDNA;
@@ -14,7 +14,7 @@ public class StatsDTO {
 
     Double ration;
 
-    public StatsDTO(BigDecimal countMutantDNA, BigDecimal countHumanDNA, Double ration) {
+    public Statistic(BigDecimal countMutantDNA, BigDecimal countHumanDNA, Double ration) {
         this.countMutantDNA = countMutantDNA;
         this.countHumanDNA = countHumanDNA;
         this.ration = ration;

@@ -1,6 +1,6 @@
-package mutan.resources;
+package mutant.resources;
 
-import mutan.dto.ApiError;
+import mutant.dto.ApiError;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
