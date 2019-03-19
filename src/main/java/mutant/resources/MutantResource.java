@@ -57,7 +57,7 @@ public class MutantResource {
             sequence.setMutant(isMutant);
             mutantService.save(sequence);
         }
-        if (existentSequence != null && existentSequence.getMutant() || sequence.getMutant()) {
+        if (existentSequence != null && existentSequence.getMutant() || (sequence.getMutant() != null && sequence.getMutant())) {
            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(Response.SC_FORBIDDEN).build();
