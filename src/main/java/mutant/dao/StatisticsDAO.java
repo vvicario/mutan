@@ -44,7 +44,7 @@ public class StatisticsDAO {
             if (statistics == null) {
                 saveFirstRecord(isMutant, txn);
             } else {
-                update(isMutant, txn, statistics);
+                update(isMutant, txn, statistics.getLong(TOTAL), statistics.getLong(CANT_MUTANTS), statistics.getKey().getId());
             }
         } finally {
             if (txn.isActive()) {
@@ -58,13 +58,13 @@ public class StatisticsDAO {
      *
      * @param isMutant   is a boolean value to include in statistics
      * @param txn        current transaction
-     * @param statistics existent information
+     *
      */
-    private void update(Boolean isMutant, Transaction txn, Entity statistics) {
-        Key key = keyFactory.newKey(statistics.getKey().getId());
+    protected void update(Boolean isMutant, Transaction txn, Long total, Long cantMutants, Long id) {
+        Key key = keyFactory.newKey(id);
         Entity entity = Entity.newBuilder(key)
-                .set(TOTAL, statistics.getLong(TOTAL) + 1)
-                .set(CANT_MUTANTS, isMutant ? statistics.getLong(CANT_MUTANTS) + 1 : statistics.getLong(CANT_MUTANTS))
+                .set(TOTAL, total + 1)
+                .set(CANT_MUTANTS, isMutant ? cantMutants + 1 : cantMutants)
                 .build();
         txn.update(entity);
         txn.commit();

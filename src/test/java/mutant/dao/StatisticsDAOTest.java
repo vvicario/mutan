@@ -1,6 +1,8 @@
 package mutant.dao;
 
 import com.google.cloud.datastore.Datastore;
+import com.google.cloud.datastore.Entity;
+import com.google.cloud.datastore.FullEntity;
 import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.KeyFactory;
 import com.google.cloud.datastore.Transaction;
@@ -46,6 +48,13 @@ public class StatisticsDAOTest {
         statisticsDAO.save(true);
         Mockito.verify(transaction, Mockito.times(1)).run(Mockito.any());
         Mockito.verify(transaction, Mockito.times(0)).update(Mockito.any());
+    }
+
+    @Test
+    public void testUpdate() {
+        statisticsDAO.update(true, transaction, 15l, 2l, 2l);
+        Mockito.verify(transaction, Mockito.times(1)).update(Mockito.any());
+        Mockito.verify(transaction, Mockito.times(1)).commit();
     }
 
 }
