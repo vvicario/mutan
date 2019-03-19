@@ -32,8 +32,8 @@ public class SequenceDAO {
     private static final String SEQUENCE = "Sequence";
 
     public SequenceDAO() {
-        datastore = DatastoreOptions.getDefaultInstance().getService();
-        sequenceKeyFactory = datastore.newKeyFactory().setKind(SEQUENCE);
+        this.datastore = DatastoreOptions.getDefaultInstance().getService();
+        this.sequenceKeyFactory = datastore.newKeyFactory().setKind(SEQUENCE);
     }
 
     /**
@@ -49,10 +49,11 @@ public class SequenceDAO {
                     .set(DNA, String.join(",", sequence.getDna()))
                     .set(MUTANT, sequence.getMutant())
                     .build();
+
             Entity sequenceEntity = txn.add(entity);
             statisticDAO.save(sequence.getMutant());
             txn.commit();
-            return sequenceEntity.getKey().getId();
+            return sequenceEntity != null ? sequenceEntity.getKey().getId() : null;
         } finally {
             if (txn.isActive()) {
                 txn.rollback();
@@ -73,7 +74,15 @@ public class SequenceDAO {
                 .build();
 
         QueryResults<Entity> results = datastore.run(query);
-        return results.hasNext() ? getSequence(results.next()) : null;
+        return results != null && results.hasNext() ? getSequence(results.next()) : null;
+    }
+
+    public void setStatisticDAO(StatisticsDAO statisticDAO) {
+        this.statisticDAO = statisticDAO;
+    }
+
+    public void setDatastore(Datastore datastore) {
+        this.datastore = datastore;
     }
 
     private Sequence getSequence(Entity sequenceEntity) {

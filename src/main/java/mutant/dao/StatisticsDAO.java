@@ -25,10 +25,9 @@ public class StatisticsDAO {
     public static final String CANT_MUTANTS = "cantMutants";
     private static final String STATISTICS = "Statistics";
 
-
     public StatisticsDAO() {
-        datastore = DatastoreOptions.getDefaultInstance().getService();
-        keyFactory = datastore.newKeyFactory().setKind(STATISTICS);
+        this.datastore = DatastoreOptions.getDefaultInstance().getService();
+        this.keyFactory = datastore.newKeyFactory().setKind(STATISTICS);
     }
 
     /**
@@ -87,7 +86,6 @@ public class StatisticsDAO {
         txn.commit();
     }
 
-
     /**
      * Find existent statistics information
      *
@@ -99,6 +97,10 @@ public class StatisticsDAO {
                 .setKind(STATISTICS)
                 .build();
         QueryResults<Entity> results = txn.run(query);
-        return results.hasNext() ? results.next() : null;
+        return results != null && results.hasNext() ? results.next() : null;
+    }
+
+    public void setDatastore(Datastore datastore) {
+        this.datastore = datastore;
     }
 }
