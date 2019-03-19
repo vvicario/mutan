@@ -1,37 +1,40 @@
 package mutant.services;
 
-import mutant.domain.Sequence;
+import com.google.cloud.datastore.Entity;
+import mutant.dao.StatisticsDAO;
 import mutant.dto.Statistic;
-import mutant.repository.SequenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author vvicario
+ */
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
-    private SequenceRepository sequenceRepository;
+    private StatisticsDAO statisticsDAO;
 
-    public StatisticsServiceImpl(SequenceRepository sequenceRepository) {
-        this.sequenceRepository = sequenceRepository;
+    public StatisticsServiceImpl(StatisticsDAO statisticsDAO) {
+        this.statisticsDAO = statisticsDAO;
     }
+
     @Async
     @Override
     public CompletableFuture<Statistic> getStatistics() {
-        List<Sequence> mutantTotal = sequenceRepository.findByMutantTrue();
-        Long totalSeq = sequenceRepository.count();
+        Entity statistics = statisticsDAO.findStatistics(null);
+        Long totalMutants = statistics != null ? statistics.getLong(StatisticsDAO.CANT_MUTANTS) : 0;
+        Long totalSeq = statistics != null ? statistics.getLong(StatisticsDAO.TOTAL) : 0;
         long ratio = 0;
-        if(!CollectionUtils.isEmpty(mutantTotal)) {
-            ratio = mutantTotal.size() / totalSeq;
+        if(totalMutants > 1 && totalSeq > 0) {
+            ratio = totalMutants / totalSeq;
         }
         DecimalFormat df = new DecimalFormat("#.#");
-        return CompletableFuture.completedFuture(new Statistic(BigDecimal.valueOf(CollectionUtils.isEmpty(mutantTotal) ? 0 : mutantTotal.size()), BigDecimal.valueOf(totalSeq), Double.valueOf(df.format(ratio))));
+        return CompletableFuture.completedFuture(new Statistic(BigDecimal.valueOf(totalMutants), BigDecimal.valueOf(totalSeq), Double.valueOf(df.format(ratio))));
     }
 }

@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
+/**
+ * @author vvicario
+ */
 public class ApiErrorTest {
 
     private ApiError apiError;

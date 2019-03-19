@@ -1,15 +1,11 @@
 package mutant.services;
 
-import javassist.NotFoundException;
+
 import mutant.domain.Sequence;
-import mutant.repository.SequenceRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import mutant.dao.SequenceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 public class MutantServiceImpl implements MutantService {
 
     @Autowired
-    private SequenceRepository sequenceRepository;
+    private SequenceDAO sequenceDAO;
 
     private static final String ADN_BASE_A = "AAAA";
     private static final String ADN_BASE_T = "TTTT";
@@ -29,20 +25,19 @@ public class MutantServiceImpl implements MutantService {
     private static final Integer MIN_TOTAL_SEQUENCE = 2;
     private static final Integer TOTAL_SIZE_SEQUENCE = 4;
 
-    @Transactional
-    @Override
-    public Sequence update(Sequence sequence) {
-        return sequenceRepository.save(sequence);
-    }
-
-    @Transactional
     @Override
     public Sequence save(@Valid Sequence sequence) {
-        Sequence existentSequence = sequenceRepository.findAllByDna(sequence.getDna());
+        Sequence existentSequence = sequenceDAO.findByDna(sequence.getDna());
         if (existentSequence == null) {
-            sequence = sequenceRepository.save(sequence);
+            Long id = sequenceDAO.save(sequence);
+            sequence.setId(id);
         }
         return existentSequence != null ? existentSequence : sequence;
+    }
+
+    @Override
+    public Sequence findByDna(@Valid Sequence sequence) {
+        return sequenceDAO.findByDna(sequence.getDna());
     }
 
     @Async
@@ -140,6 +135,9 @@ public class MutantServiceImpl implements MutantService {
         return total;
     }
 
+    /**
+     * Create an array with provided dna sequence
+     */
     private char[][] createArray(String[] dnaList) {
         char[][] mutant;
         int sizePerColumn = dnaList[0].length();
@@ -165,6 +163,11 @@ public class MutantServiceImpl implements MutantService {
         throw new IllegalArgumentException(message);
     }
 
+    /**
+     * Check if the specified sequence has valid values
+     * @param sequence values provided by the user
+     * @return false if it is not valid
+     */
     private boolean isValidSequence(String sequence) {
         boolean isValidSequence = false;
         if (sequence.contains(ADN_BASE_T) ||

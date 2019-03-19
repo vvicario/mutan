@@ -1,9 +1,8 @@
 package mutant.services;
 
 import mutant.MutantApplication;
+import mutant.dao.StatisticsDAO;
 import mutant.dto.Statistic;
-import mutant.repository.SequenceRepository;
-import mutant.resources.MutantResource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,24 +22,22 @@ import java.util.concurrent.CompletableFuture;
 public class StatisticsServiceTest {
 
     @Mock
-    private SequenceRepository sequenceRepository;
+    private StatisticsDAO statisticsDAO;
 
     private StatisticsServiceImpl service;
 
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        service = new StatisticsServiceImpl(sequenceRepository);
+        service = new StatisticsServiceImpl(statisticsDAO);
     }
 
     @Test
     public void getEmptyStatistics() throws Exception {
-        Mockito.when(sequenceRepository.findByMutantTrue()).thenReturn(null);
-        Mockito.when(sequenceRepository.count()).thenReturn(0l);
+        Mockito.when(statisticsDAO.findStatistics(null)).thenReturn(null);
         CompletableFuture<Statistic> statisticCompletableFuture = service.getStatistics();
         Statistic statistic = statisticCompletableFuture.get();
         Assert.assertEquals(statistic.getCountHumanDNA(), BigDecimal.valueOf(0));
         Assert.assertEquals(statistic.getCountMutantDNA(), BigDecimal.valueOf(0));
     }
-
 }

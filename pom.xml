@@ -35,16 +35,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
@@ -54,6 +44,42 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-datastore</artifactId>
+            <version>1.62.0</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.google.appengine</groupId>-->
+            <!--<artifactId>appengine-api-1.0-sdk</artifactId>-->
+            <!--<version>1.9.71</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.google.appengine</groupId>-->
+            <!--<artifactId>appengine-api-labs</artifactId>-->
+            <!--<version>1.9.18</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.google.appengine</groupId>-->
+            <!--<artifactId>appengine-api-stubs</artifactId>-->
+            <!--<version>1.9.71</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.google.appengine</groupId>-->
+            <!--<artifactId>appengine-tools-api</artifactId>-->
+            <!--<version>1.7.0</version>-->
+        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-tools-sdk -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-tools-sdk</artifactId>
+            <version>1.9.71</version>
         </dependency>
 
     </dependencies>
@@ -86,9 +112,6 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.2.201409121644</version>
                 <configuration>
-                    <excludes>
-                        <exclude>org.broadinstitute.consent.http.enumeration</exclude>
-                    </excludes>
                     <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
                     <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
                 </configuration>

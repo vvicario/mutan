@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * @author vvicario
+ */
 @Component
 public interface StatisticsService {
 

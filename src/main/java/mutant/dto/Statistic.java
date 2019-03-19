@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 public class Statistic {
 
     @JsonProperty("count_mutant_dna")
-    BigDecimal countMutantDNA;
+    private BigDecimal countMutantDNA;
 
     @JsonProperty("count_human_dna")
-    BigDecimal countHumanDNA;
+    private BigDecimal countHumanDNA;
 
     Double ration;
 

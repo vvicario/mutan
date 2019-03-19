@@ -1,8 +1,9 @@
 package mutant.services;
 
 import mutant.domain.Sequence;
-import mutant.repository.SequenceRepository;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +36,6 @@ public class MutantServiceTest {
 
     @Autowired
     private MutantService service;
-
-    @Autowired
-    SequenceRepository sequenceRepository;
-
-    @Test
-    public void testSave() throws Exception {
-        Sequence sequence = new Sequence();
-        sequence.setDna(DNA_1);
-        sequence = service.save(sequence);
-        Assert.assertTrue(Arrays.equals(sequence.getDna(), DNA_1));
-        sequence.setMutant(true);
-        sequence = service.update(sequence);
-        Assert.assertTrue(sequence.getMutant());
-    }
 
     @Test
     public void testIsMutantDiagonalAndHorizontalAndVertical() throws ExecutionException, InterruptedException {
@@ -122,7 +109,4 @@ public class MutantServiceTest {
         Assert.assertTrue(isMutant.get());
     }
 
-
-
 }
-

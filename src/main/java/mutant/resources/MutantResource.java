@@ -40,23 +40,36 @@ public class MutantResource {
       this.mutantService = mutantService;
     }
 
+    /**
+     * Return 200 OK if the specified sequence is mutant otherwise 403
+     * @param sequence array of sequence
+     * @return Return 200 OK if the specified sequence is mutant, 400 BAD REQUEST if
+     * sequence is invalid or 403 FORBIDDEN if it is not mutant
+     * @throws Exception
+     */
     @PostMapping(path = "/mutant")
     public ResponseEntity create(@RequestBody @Valid Sequence sequence) throws Exception {
         validator.validate(sequence);
-        sequence = mutantService.save(sequence);
-        if(sequence.getMutant() == null) {
+        Sequence existentSequence = mutantService.findByDna(sequence);
+        if(existentSequence == null) {
             CompletableFuture<Boolean> isMutantFuture = mutantService.isMutant(sequence);
             Boolean isMutant = isMutantFuture.get();
             sequence.setMutant(isMutant);
-            mutantService.update(sequence);
+            mutantService.save(sequence);
         }
-        if (sequence.getMutant()) {
+        if (existentSequence != null && existentSequence.getMutant() || sequence.getMutant()) {
            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(Response.SC_FORBIDDEN).build();
         }
     }
 
+    /**
+     *
+     * @return Statistics information with among of mutants and total count human dna
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @GetMapping(path = "/stats")
     public ResponseEntity<Statistic> findStatistics() throws ExecutionException, InterruptedException {
        return ResponseEntity.ok().body(statisticsService.getStatistics().get());
