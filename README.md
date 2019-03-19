@@ -1,9 +1,8 @@
 Mutant
 ====
 
-[![Build Status](https://travis-ci.com/vvicario/mutant.svg?branch=master)](https://travis-ci.org/gvquiroz/it-challenge-ml)
-
-[![Coverage Status](https://coveralls.io/repos/github/vvicario/mutant/badge.svg)](https://coveralls.io/github/vvicario/mutant)
+[![Build Status](https://travis-ci.com/vvicario/mutant.svg?branch=master)]
+[![Coverage Status](https://coveralls.io/repos/github/vvicario/mutant/badge.svg?branch=master)](https://coveralls.io/github/vvicario/mutant?branch=master)
 
 Magneto quiere reclutar la mayor cantidad de mutantes para poder luchar contra los X-Mens.
 Se necesita detectar si un humano es mutante basándose en su secuencia de ADN.
